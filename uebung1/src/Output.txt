@@ -1,0 +1,44 @@
+Output Hallo.java
+
+Hallo Welt!
+
+
+Output Divide.java
+
+Dieses Programm berechnet den Quotienten von a(hoch2) / b. Dazu müssen Sie zwei natürliche Zahlen eingeben.
+Eine natürliche Zahl bitte: 
+as
+Keine natürliche Zahl eingegeben oder die zweite Zahl war 0: java.lang.NumberFormatException: For input string: "as"
+Eine natürliche Zahl bitte: 
+14
+Eine natürliche Zahl bitte: 
+0
+Keine natürliche Zahl eingegeben oder die zweite Zahl war 0: java.lang.Exception: Division by zero.
+Eine natürliche Zahl bitte: 
+12
+Sie haben die Zahlen 14 und 12 eingegeben.
+Das Resultat aus 14*14/12 wird berechnet.
+16.333333333333332
+16 Rest 4
+
+
+Output Operators.java
+
+Korrekt! 237.0 gleich 237.0
+Korrekt! -3.0 gleich -3.0
+Korrekt! 10.0 gleich 10.0
+Korrekt! 5.0 gleich 5.0
+
+
+Output Output.java
+
+1 + 2
+3
+1 + 2 = 23
+
+
+Output Problem.java
+
+a =17.0
+a = 41.0
+b = 1.705
