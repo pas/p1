@@ -1,6 +1,6 @@
 /*
  *  
- *  Author: 		Judit Fuog und Pascal Zaugg
+ *  Author: 		Judith Fuog und Pascal Zaugg
  *  Matrikelnr.:	?? / 05-299-425
  *  Aufgabe:		1-2
  *  Program:		Divide.java
@@ -24,7 +24,7 @@ public class Divide {
 	    	  a[count] = Integer.parseInt(scan.nextLine()); 
 	    	  if (count == 1 && a[count] == 0) { throw div0; };
 	    	  count++;
-	    
+	    }
 	    catch (Exception e) { 
 	    	System.out.println("Keine natürliche Zahl eingegeben oder die zweite Zahl war 0: " + e); 
 	    }
