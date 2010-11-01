@@ -3,6 +3,7 @@
 
 */
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class GuessChess{
 			doRound();
 			System.out.print("Play another round (y or n)? ");
 			goOn = scn.next().toLowerCase();
+			System.out.println("");
 		}
 		printFinalResult();
 	}
@@ -67,23 +69,27 @@ public class GuessChess{
 		       return;
 			}
 			else {
-				System.out.print(line + " was wrong. Hints: ");
+				if (i > 1) {
+					System.out.print(line + " was wrong. Hints: ");
 	    	
-				if (directionRow  > 0)
-					System.out.print("GO DOWN! ");
-				if (directionRow < 0) 
-					System.out.print("GO UP! ");
+					if (directionRow  > 0)
+						System.out.print("GO DOWN! ");
+					if (directionRow < 0) 
+						System.out.print("GO UP! ");
 		
-	    		if (directionColumn > 0) 
-	    			System.out.print("GO LEFT!");
-	    		if (directionColumn < 0)
-	    			System.out.print("GO RIGHT!");
+					if (directionColumn > 0) 
+						System.out.print("GO LEFT!");
+					if (directionColumn < 0)
+						System.out.print("GO RIGHT!");
 			
-			    System.out.println();
+					System.out.println();
+				}
+				else {
+					System.out.println("You lose! The secrect field was " + secretColumn+secretRow + ".");
+					System.out.println();
+				}
 			}
 	    }
-		System.out.println("You lose! The secrect field was " + secretColumn+secretRow + ".");
-		System.out.println();
 	}
 
 	/** Prints the final result (who won how often) */
@@ -111,7 +117,8 @@ public class GuessChess{
 					}
 				}
 				board += "|\n";
-			}else{
+			}
+			else{
 				board += "|_|_|_|_|_|_|_|_|\n";
 			}
 		}
