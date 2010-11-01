@@ -1,3 +1,5 @@
+import java.text.ParseException;
+
 public class BookStore {
 
 	private Book firstBook = new Book();
@@ -6,11 +8,17 @@ public class BookStore {
 	private Book forthBook = new Book();
 	private Book fifthBook = new Book();
 	
+	private int registeredBooks = 0; 
+	
 	public BookStore() {
 	}
 	
-	public void registerBooks() throws java.text.ParseException {
-	  for (int i = 0 ; i<5; i++) {
+	public void registerBooks() throws ParseException {
+	  
+	  String next = "y";
+	  int i = 0;
+		
+	  while (i < 5 && next.equalsIgnoreCase("y")) {
           Book tmpBook;
 		  switch (i) {
 			  case 0 :
@@ -32,39 +40,61 @@ public class BookStore {
 			      tmpBook = new Book(); // To keep java warnings still
 		   }
 		  tmpBook.input();
-		  System.out.print("Do you want to register another book (y/n)? ");
-	      java.util.Scanner scn = new java.util.Scanner(System.in);
-		  if (scn.nextLine().equals("n")) {
-	        break;
-	      }
+		  registeredBooks++;
+		  if (i < 4) {
+			  System.out.print("Do you want to register another book (y/n)? ");
+			  java.util.Scanner scn = new java.util.Scanner(System.in);
+			  next = scn.nextLine();
+		  }
 	    }
 	  
 	}
 	
 	public void listBooks() {
-	  if (! firstBook.isEmpty())
-		  System.out.println(firstBook + "");
-	  if (! secondBook.isEmpty())
-		  System.out.println(secondBook + "");
-	  if (! thirdBook.isEmpty())
-		  System.out.println(thirdBook + "");
-	  if (! forthBook.isEmpty())
-		  System.out.println(forthBook + "");
-	  if (! fifthBook.isEmpty())
-		  System.out.println(fifthBook + "");
+	  switch (registeredBooks) {
+		  case 1 :
+			  System.out.println(firstBook + "");
+		  case 2 :
+			  System.out.println(firstBook + "");
+			  System.out.println(secondBook + "");
+		  case 3 :
+			  System.out.println(firstBook + "");
+			  System.out.println(secondBook + "");
+			  System.out.println(thirdBook + "");
+		  case 4 :
+			  System.out.println(firstBook + "");
+			  System.out.println(secondBook + "");
+			  System.out.println(thirdBook + "");
+			  System.out.println(forthBook + "");
+		  case 5 :
+			  System.out.println(firstBook + "");
+			  System.out.println(secondBook + "");
+			  System.out.println(thirdBook + "");
+			  System.out.println(forthBook + "");
+			  System.out.println(fifthBook + "");
+	   }
 	}
 	
 	public String getCheapestBook() {
 		Book cheapest = firstBook;
 		
-		  if (! secondBook.isEmpty())
-			  cheapest = cheapest.getPrice() > secondBook.getPrice() ? secondBook : cheapest;
-		  if (! thirdBook.isEmpty())
-			  cheapest = cheapest.getPrice() > thirdBook.getPrice() ? thirdBook : cheapest;
-		  if (! forthBook.isEmpty())
-			  cheapest = cheapest.getPrice() > forthBook.getPrice() ? forthBook : cheapest;
-		  if (! fifthBook.isEmpty())
-			  cheapest = cheapest.getPrice() > fifthBook.getPrice() ? fifthBook : cheapest;
+		switch(registeredBooks) {
+			case 2:
+				cheapest = cheapest.getPrice() > secondBook.getPrice() ? secondBook : cheapest;
+			case 3:
+				cheapest = cheapest.getPrice() > secondBook.getPrice() ? secondBook : cheapest;
+				cheapest = cheapest.getPrice() > thirdBook.getPrice() ? thirdBook : cheapest;
+			case 4:
+				cheapest = cheapest.getPrice() > secondBook.getPrice() ? secondBook : cheapest;
+				cheapest = cheapest.getPrice() > thirdBook.getPrice() ? thirdBook : cheapest;
+				cheapest = cheapest.getPrice() > forthBook.getPrice() ? forthBook : cheapest;
+			case 5:
+				cheapest = cheapest.getPrice() > secondBook.getPrice() ? secondBook : cheapest;
+				cheapest = cheapest.getPrice() > thirdBook.getPrice() ? thirdBook : cheapest;
+				cheapest = cheapest.getPrice() > forthBook.getPrice() ? forthBook : cheapest;
+				cheapest = cheapest.getPrice() > fifthBook.getPrice() ? fifthBook : cheapest;
+		}
+
 	  return cheapest + "";
 	}
 }

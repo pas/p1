@@ -14,7 +14,6 @@ public class Book{
 	private Date dateOfPublication;
 	private int price = 0;
 	private NumberFormat fmt = NumberFormat.getCurrencyInstance();
-	private boolean initialized = false;
 	
 	public static final String DATE_FORMAT = "dd.MM.yyyy";
 	
@@ -25,17 +24,9 @@ public class Book{
 		author = tmpAuthor;
 		dateOfPublication = tmpDateOfPubl;
 		price = tmpPrice;
-		initialized = true;
 	}
 
 	public Book() {		
-	}
-
-	public boolean isEmpty() {
-		  if ( initialized )
-			  return false;
-		  else
-			  return true;		  
 	}
 	
 	/** Returns the age of the book in days since publication */
@@ -64,7 +55,6 @@ public class Book{
 		dateOfPublication = stringToDate(scn.nextLine());
 		System.out.print("Please enter the price in CHF as a whole number: ");
 		price = Integer.parseInt(scn.nextLine());
-		initialized = true;
 	}
 
 
