@@ -74,7 +74,15 @@ public class GuessChess_advanced {
 	public void play(){
 		showWelcomeScreen();
 		
-		File statistic = new File("score.guess");
+		File statistic = new File(boardsize_rows + "x" + boardsize_columns + "-score.guess");
+		try {
+			statistic.createNewFile();
+		}
+		catch (IOException e) {
+			System.out.println("Couldn't create new file. Statistics cannot be saved");
+			e.printStackTrace();
+		}
+		
 		try {
 			Scanner file = new Scanner(statistic);
 			file.useDelimiter(";"); file.next(); file.next();
@@ -99,6 +107,7 @@ public class GuessChess_advanced {
 			goOn = scn.next().toLowerCase();
 		}
 		printFinalResult();
+		saveStatistics();
 	}
 
 	/** Choose a field randomly and let the player guess */
@@ -117,6 +126,7 @@ public class GuessChess_advanced {
 		
 		for (int i = max_guesses; i > 0; i--) {
 			readUserinput(i);
+			
 			printBoard(guessedColumn, guessedRow);
 			System.out.println();
 			
@@ -155,7 +165,8 @@ public class GuessChess_advanced {
 	}
 
 	/** Reads the users input and checks for correctness. Saves the result in guessedRow and
-	  guessedColumn and guessed. */
+	  guessedColumn and guessed. If input equals "exit" the program is terminated.
+	  The active round counts as lost. */
 	
 	private void readUserinput (int attempts) {
 		Scanner scn = new Scanner(System.in);
@@ -164,6 +175,14 @@ public class GuessChess_advanced {
 		while(notValid) {
 			System.out.print("You have " + attempts + " attempts left. Guess field: ");
 			guessed = scn.nextLine().toLowerCase();
+			
+			if (guessed.equalsIgnoreCase("exit")) {
+				no_rounds++;
+				printFinalResult();
+				saveStatistics();
+				System.exit(0);
+			}
+			
 			guessedColumn = guessed.charAt(0);
 			
 			try { 
@@ -180,14 +199,10 @@ public class GuessChess_advanced {
 		}
 	}
 		
-	/** Prints the final result (who won how often) */
-	private void printFinalResult(){
-		System.out.println("GAME OVER!");
-		System.out.println("Final score: you won " + score + " of " + no_rounds + " rounds!");
-		
-		showStatistic(scoreFile+score, no_roundsFile+no_rounds);
-		
-	      File ausgabeDatei = new File("score.guess"); 
+	/** Saves statistic to a file named as "boardsize_rows"x"boardsize_columns"-scores.guess */
+	
+	private void saveStatistics() {
+	      File ausgabeDatei = new File(boardsize_rows + "x" + boardsize_columns + "-score.guess"); 
 	      
 	      try { 
 	    	  FileWriter fw = new FileWriter(ausgabeDatei); 
@@ -198,9 +213,16 @@ public class GuessChess_advanced {
 	    	  bw.close();
 	      }
 	      catch (IOException e) { 
-	    	  System.out.println("Couldn't write scores!" + e.getStackTrace()); 
+	    	  System.out.println("Couldn't write score!" + e.getStackTrace()); 
 	      }
-	      
+	}
+	
+	/** Prints the final result (who won how often) */
+	private void printFinalResult(){
+		System.out.println("GAME OVER!");
+		System.out.println("Final score: you won " + score + " of " + no_rounds + " rounds!");
+		
+		showStatistic(scoreFile+score, no_roundsFile+no_rounds);	      
 	}
 	
 	
