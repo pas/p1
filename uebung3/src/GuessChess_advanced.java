@@ -1,6 +1,9 @@
 /*
-
-
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 04.11.2010
+* 
 */
 
 import java.io.*;
@@ -75,12 +78,27 @@ public class GuessChess_advanced {
 		showWelcomeScreen();
 		
 		File statistic = new File(boardsize_rows + "x" + boardsize_columns + "-score.guess");
-		try {
-			statistic.createNewFile();
-		}
-		catch (IOException e) {
-			System.out.println("Couldn't create new file. Statistics cannot be saved");
-			e.printStackTrace();
+		
+		if (!(statistic.exists())) {
+			try {
+				statistic.createNewFile();
+				try { 
+		    	    FileWriter fw = new FileWriter(statistic); 
+		    	    BufferedWriter bw = new BufferedWriter(fw); 
+		    	    bw.write(boardsize_rows + ";" + boardsize_columns + ";" + 0 
+		    			  + ";" + 0 + ";"); 
+		    	    bw.newLine(); 
+		    	    bw.close();
+				}
+				catch (IOException e) { 
+		    	    System.out.println("Couldn't write!" + e.getStackTrace());
+		    	    System.exit(0);
+				}
+		    }
+		    catch (IOException e) {
+			    System.out.println("Couldn't create new file. Statistics cannot be saved");
+			    e.printStackTrace();
+		    }
 		}
 		
 		try {
