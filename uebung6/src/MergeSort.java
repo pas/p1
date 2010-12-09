@@ -1,12 +1,20 @@
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Excercise: 6-1
+* Last modified: 09.12.2010
+* 
+*/
+
+
 public class MergeSort {
-	public static Comparable[] sort (Comparable[] array) {
-		array = mergeSort(array);
-		System.out.print("Merged: ");
+	public static void sort (Comparable[] array) {
+		Comparable[] array_new = new Comparable[array.length];
+		array_new = mergeSort(array);
 		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i] + " ");
+			array[i] = array_new[i];
 		}
-		System.out.println();
-		return array;
 	}
 	private static Comparable[] mergeSort (Comparable[] array) {
 		if (array.length == 1) {
@@ -25,10 +33,8 @@ public class MergeSort {
 			
 			arrayFirstHalf = mergeSort(arrayFirstHalf);
 			arraySecondHalf = mergeSort(arraySecondHalf);
-
-			array = merge(arrayFirstHalf, arraySecondHalf);
 						
-			return array;
+			return merge(arrayFirstHalf, arraySecondHalf);
 		}
 	}
 	private static Comparable[] merge (Comparable[] array1, Comparable[] array2) {
