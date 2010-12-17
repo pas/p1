@@ -1,0 +1,756 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 18 36 594 756
+%%Title: Enscript Output
+%%Creator: GNU enscript 1.6.5
+%%CreationDate: Fri Dec 17 14:33:28 2010
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6 5
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6 5
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 7 7 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [612 792] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-simple 1.6 5
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_left_str show
+
+      d_header_w user_header_center_str stringwidth pop sub 2 div
+      0 moveto user_header_center_str show
+
+      d_header_w user_header_right_str stringwidth pop sub 5 sub
+      0 moveto user_header_right_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 720 def
+/d_page_h 576 def
+/d_header_x 0 def
+/d_header_y 561 def
+/d_header_w 720 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 720 def
+/d_footer_h 0 def
+/d_output_w 720 def
+/d_output_h 561 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+36 -594 translate
+/pagenum 1 def
+/fname (MobileDictionary.java) def
+/fdir (.) def
+/ftail (MobileDictionary.java) def
+% User defined strings:
+/fmodstr (Fri Dec 17 14:29:39 2010) def
+/pagenumstr (1) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 551 M
+(/*) s
+5 543 M
+(* ) s
+5 535 M
+(* Author: Judith Fuog / Pascal Zaugg) s
+5 527 M
+(* Matrikelnr.: 09-926-809 / 05-299-425) s
+5 519 M
+(* Excercice 7-1) s
+5 511 M
+(* Last modified: 17.12.2010) s
+5 503 M
+(* ) s
+5 495 M
+(*/) s
+5 479 M
+(import java.io.File;) s
+5 471 M
+(import java.io.FileNotFoundException;) s
+5 463 M
+(import java.util.*;) s
+5 447 M
+(public class MobileDictionary {) s
+5 439 M
+(        ) s
+5 431 M
+(        private HashMap<String, List<String>> hash = new HashMap<String, List<Strin) s
+5 423 M
+(g>>\(\);) s
+5 415 M
+(        ) s
+5 407 M
+(        public void loadDictionary\(String filename\) throws FileNotFoundException {) s
+5 399 M
+(    ) s
+5 391 M
+(                File dictFile = new File\(filename\);             ) s
+5 383 M
+(                Scanner file = new Scanner \(dictFile\);) s
+5 375 M
+(                ) s
+5 367 M
+(                int count = 0;) s
+5 359 M
+(                ) s
+5 351 M
+(                System.out.print\("Loading dictionary"\);) s
+5 343 M
+(                ) s
+5 335 M
+(                long fileSize = dictFile.length\(\);) s
+5 327 M
+(                long startFileSize = fileSize;) s
+5 319 M
+(                ) s
+5 311 M
+(                while\(file.hasNextLine\(\)\) {) s
+5 303 M
+(                        String line = file.nextLine\(\);) s
+5 295 M
+(                        fileSize = fileSize - line.getBytes\(\).length;) s
+5 287 M
+(                        int procent = \(int\) \(\(100*fileSize/startFileSize\)\);) s
+5 279 M
+(                        procent = 100 - procent;) s
+5 271 M
+(                        ) s
+5 263 M
+(                        String keyComb = getKeyCombination\(line\);) s
+5 255 M
+(                        if \(keyComb == null\) continue;) s
+5 239 M
+(                        List<String> list = hash.get\(keyComb\);) s
+5 231 M
+(                        if \(list == null\) {) s
+5 223 M
+(                                list = new ArrayList<String>\(\);) s
+5 215 M
+(                        }) s
+5 207 M
+(                        list.add\(line\);) s
+5 199 M
+(                        hash.put\(keyComb, list\);) s
+5 191 M
+(                        ) s
+5 183 M
+(                        if \(count % 10000 == 0\) { System.out.print\("\\r" + procent +) s
+5 175 M
+( "%"\); };) s
+5 167 M
+(                        count++;) s
+5 159 M
+(                }) s
+5 151 M
+(                System.out.println\("\\rSuccesfully loaded " + count + " words!"\);) s
+5 143 M
+(    }) s
+5 135 M
+(        ) s
+5 127 M
+(        public List<String> decode\(String code\) {) s
+5 119 M
+(                return\(hash.get\(code\)\);) s
+5 111 M
+(        }) s
+5 103 M
+(    ) s
+5 95 M
+(    private String getKeyCombination \(String word\) {) s
+5 87 M
+(        String combination = "";) s
+5 79 M
+(        for \(int i = 0; i<word.length\(\); i++\) {) s
+5 71 M
+(                char character = ' ';) s
+5 63 M
+(                try {) s
+5 55 M
+(                        character = getKeyNumber\(Character.toLowerCase\(word.charAt\() s
+5 47 M
+(i\)\)\);) s
+5 39 M
+(                }) s
+5 31 M
+(                catch \(Exception e\) { return null; }) s
+5 23 M
+(                combination += character;) s
+5 15 M
+(        }) s
+5 7 M
+(        return combination;) s
+365 551 M
+(    }) s
+365 543 M
+(    ) s
+365 535 M
+(        /** Given a character, returns a keycode between '1' and '9'.) s
+365 527 M
+(            Raises an exception if character is unknown. */) s
+365 519 M
+(        private char getKeyNumber\(char c\) throws Exception{) s
+365 511 M
+(                if\(c=='a'||c=='\303\244'||c=='\303\240'||c=='b'||c=='c'||c=='\303\247'\)   return '2';) s
+365 503 M
+(                else if\(c=='d'||c=='e'||c=='\303\251'||c=='f'\)                        ret) s
+365 495 M
+(urn '3';) s
+365 487 M
+(                else if\(c=='g'||c=='h'||c=='i'\) return '4';) s
+365 479 M
+(                else if\(c=='j'||c=='k'||c=='l'\) return '5';) s
+365 471 M
+(                else if\(c=='m'||c=='n'||c=='o'||c=='\303\266'\) return '6';) s
+365 463 M
+(                else if\(c=='p'||c=='q'||c=='r'||c=='s'\) return '7';) s
+365 455 M
+(                else if\(c=='t'||c=='u'||c=='\303\274'||c=='v'\) return '8';) s
+365 447 M
+(                else if\(c=='w'||c=='x'||c=='y'||c=='z'\) return '9';) s
+365 439 M
+(                else if\(c=='\\''||c=='-'\)        return '1';) s
+365 431 M
+(                else throw new Exception\("unknown character: "+c\);) s
+365 423 M
+(        }) s
+365 407 M
+(}) s
+_R
+S
+%%Page: (1) 2
+%%BeginPageSetup
+_S
+90 rotate
+36 -594 translate
+/pagenum 1 def
+/fname (Stack.java) def
+/fdir (.) def
+/ftail (Stack.java) def
+% User defined strings:
+/fmodstr (Fri Dec 17 14:29:36 2010) def
+/pagenumstr (1) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 551 M
+(/*) s
+5 543 M
+(* ) s
+5 535 M
+(* Author: Judith Fuog / Pascal Zaugg) s
+5 527 M
+(* Matrikelnr.: 09-926-809 / 05-299-425) s
+5 519 M
+(* Excercice 7-2) s
+5 511 M
+(* Last modified: 17.12.2010) s
+5 503 M
+(* ) s
+5 495 M
+(*/) s
+5 479 M
+(import java.util.EmptyStackException;) s
+5 463 M
+(public class Stack {) s
+5 447 M
+(  private class StackItem {) s
+5 439 M
+(                Object object;) s
+5 431 M
+(                StackItem nextStackItem;) s
+5 423 M
+(                ) s
+5 415 M
+(                public StackItem\(Object o, StackItem stackItem\) {) s
+5 407 M
+(                  nextStackItem = stackItem;) s
+5 399 M
+(                  object = o;) s
+5 391 M
+(                }) s
+5 383 M
+(                ) s
+5 375 M
+(                public Object object\(\) {) s
+5 367 M
+(                  return object;) s
+5 359 M
+(                }) s
+5 351 M
+(                ) s
+5 343 M
+(                public StackItem reference\(\) {) s
+5 335 M
+(                  return nextStackItem;) s
+5 327 M
+(                }) s
+5 319 M
+(  }) s
+5 311 M
+(        ) s
+5 303 M
+(  StackItem lastItem = null;) s
+5 295 M
+(        ) s
+5 287 M
+(  public void push \(Object o\) {) s
+5 279 M
+(          lastItem = new StackItem\(o, lastItem\);) s
+5 271 M
+(  }) s
+5 255 M
+(  public Object pop\(\) throws EmptyStackException {) s
+5 247 M
+(         if \(lastItem == null\) throw new EmptyStackException\(\);) s
+5 239 M
+(         Object object = lastItem.object\(\);) s
+5 231 M
+(         lastItem = lastItem.reference\(\);) s
+5 223 M
+(         return\(object\); ) s
+5 215 M
+(  }) s
+5 207 M
+( ) s
+5 199 M
+(  public String toString\(\) {) s
+5 191 M
+(          String string = "";) s
+5 183 M
+(          StackItem item = lastItem;) s
+5 175 M
+(          while \(item != null\) {) s
+5 167 M
+(                  string = string + " " + item.object;) s
+5 159 M
+(                  item = item.reference\(\);) s
+5 151 M
+(          }) s
+5 143 M
+(          return string;) s
+5 135 M
+(  }) s
+5 127 M
+(}) s
+_R
+S
+%%Trailer
+%%Pages: 2
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF
