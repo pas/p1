@@ -1,0 +1,49 @@
+1-1
+
+if (alpha >= beta)
+	charlie = delta;
+else
+	epsilon = foxtrott;
+
+ist gleich
+
+if (beta <= alpha)
+	charlie = delta
+else
+	epsilon = foxtrott
+
+denn in alpha >= beta ist alpha = beta eingeschlossen.
+Ergo muss es in bei der Umkehrung auch eingeschlossen
+werden.
+
+
+1-2
+
+count ist, 3 da es sich um bei count um eine statische
+(static) Variable handelt. Das heisst alle Instanzen von
+Counter teilen sich die gleiche Variable. So wird die
+Variable bei einer Inkrementierung, egal in welcher
+Instanz, immer um eins erhöht.
+
+
+1-3
+
+Die Ausgabe lautet:
+
+Ich bin eine A-Methode
+Ich bin eine B-Methode
+Ich bin eine A-Methode
+
+Die show-Methode von C wird bei a3 nicht aufgerufen, da sie
+einen anderen Konstruktor hat, der ein Argument verlangt.
+Dies ist bei a3.show() nicht der Fall. Deshalb wird die
+show-Methode von A aufgerufen.
+
+
+1-4
+
+x[2] hat den Wert 3. Arrays sind in Java Objekte. Eine Zuweisung
+wie int[] y = x hat zur Folge, dass die Referenz des Objekts
+kopiert wird. Eine Veränderung von y hat deshalb auch eine
+Veränderung von x zur Folge, denn beide zeigen auf das gleiche
+Objekt.
