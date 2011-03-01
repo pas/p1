@@ -8,7 +8,10 @@
  * Arrayindex.
  * 
  * Dazu sind je nach Intention zwei Lösungen möglich.
+ * 
  */
+
+//Müssen beide Lösungen gezeigt werden oder reicht eine?
 
 public class Aufgabe2 {
 	public static void main(String args[]) {

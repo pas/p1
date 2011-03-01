@@ -1,5 +1,9 @@
 /*
-
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 03.11.2010
+* 
 */
 
 import java.util.Date;

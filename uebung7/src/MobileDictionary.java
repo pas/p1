@@ -1,42 +1,53 @@
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Excercice 7-1
+* Last modified: 17.12.2010
+* 
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-/* Programmierung 1 HS 2010 Aufgabe 7-1 */
-
-
-public class MobileDictionary{
+public class MobileDictionary {
 	
 	private HashMap<String, List<String>> hash = new HashMap<String, List<String>>();
+	private int ignored = 0;
 	
 	public void loadDictionary(String filename) throws FileNotFoundException {
     
-		File dictFile = new File(filename);
-		
+		File dictFile = new File(filename);		
 		Scanner file = new Scanner (dictFile);
 		
 		int count = 0;
 		
 		System.out.print("Loading dictionary");
+		
+		long fileSize = dictFile.length();
+		long startFileSize = fileSize;
+		
 		while(file.hasNextLine()) {
 			String line = file.nextLine();
-			String keyComb = getKeyCombination(line);
-			List<String> list = hash.get(keyComb);
-			if (list != null) {
-				list.add(line);
-				hash.put(keyComb, list);
-			}
-			else {
-				list = new ArrayList<String>();
-				list.add(line);
-				hash.put(keyComb, list);
-			}
+			fileSize = fileSize - (line.getBytes().length + 1);
+			int procent = (int) ((100*fileSize/startFileSize));
+			procent = 100 - procent;
 			
-			if (count % 100000 == 0) { System.out.print("."); };
+			String keyComb = getKeyCombination(line);
+			if (keyComb == null) continue;
+
+			List<String> list = hash.get(keyComb);
+			if (list == null) {
+				list = new ArrayList<String>();
+			}
+			list.add(line);
+			hash.put(keyComb, list);
+			
+			if (count % 10000 == 0) { System.out.print("\r" + procent + "%"); };
 			count++;
 		}
-		System.out.println("");
-		System.out.println("Succesfully loaded " + count + " words!");
+		System.out.println("\rSuccesfully loaded " + count + " words!\n" + "Ignored " + ignored + " words." );
     }
 	
 	public List<String> decode(String code) {
@@ -50,7 +61,7 @@ public class MobileDictionary{
     		try {
     			character = getKeyNumber(Character.toLowerCase(word.charAt(i)));
     		}
-    		catch (Exception e) { }
+    		catch (Exception e) { ignored++; return null; }
     		combination += character;
     	}
     	return combination;

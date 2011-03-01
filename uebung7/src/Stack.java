@@ -1,9 +1,34 @@
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Excercice 7-2
+* Last modified: 17.12.2010
+* 
+*/
+
 import java.util.EmptyStackException;
 
-/* Programmierung 1 HS 2010 Aufgabe 7-2 */
-
 public class Stack {
-  
+
+  private class StackItem {
+		Object object;
+		StackItem nextStackItem;
+		
+		public StackItem(Object o, StackItem stackItem) {
+		  nextStackItem = stackItem;
+		  object = o;
+		}
+		
+		public Object object() {
+		  return object;
+		}
+		
+		public StackItem reference() {
+		  return nextStackItem;
+		}
+  }
+	
   StackItem lastItem = null;
 	
   public void push (Object o) {
@@ -26,22 +51,4 @@ public class Stack {
 	  }
 	  return string;
   }
-}
-
-class StackItem {
-	Object object;
-	StackItem nextStackItem;
-	
-	public StackItem(Object o, StackItem stackItem) {
-	  nextStackItem = stackItem;
-	  object = o;
-	}
-	
-	public Object object() {
-	  return object;
-	}
-	
-	public StackItem reference() {
-	  return nextStackItem;
-	}
 }

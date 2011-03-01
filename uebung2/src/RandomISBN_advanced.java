@@ -1,9 +1,14 @@
-	/*
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 17.10.2010
+* 
+*/
 
-	*/
 
-	import java.text.DecimalFormat;
-	import java.util.Random;
+import java.text.DecimalFormat;
+import java.util.Random;
 
 public class RandomISBN_advanced {
 

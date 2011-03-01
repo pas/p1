@@ -1,47 +1,68 @@
-import java.text.*;
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 17.10.2010
+* 
+*/
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class testBook {
 
 	public static void main (String[] args) throws ParseException {
 
-		Book test = new Book(1001, "der Antichrist", "Friedrich Nietsche", "01.01.1895");
-		Book test2 = new Book(1002, "Kritik der praktischen Vernunft", "Immanuel Kant", "01.01.1788");
+		Book test = new Book(1001, "der Antichrist", "Friedrich Nietzsche", "01.01.1895");
 
-		System.out.println("Testing first book");
+		System.out.println("Testing first book-object");
 		System.out.println("------------------");
-		test(42291, test.age());
-		test("Friedrich Nietsche", test.getAuthor());
-		test("der Antichrist", test.getTitle());
+		
+		SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
+		
+		long differenceInDays 
+		= (  (new Date()).getTime() - (fmt.parse("01.01.1895")).getTime() ) /1000/60/60/24; 
+		
+		test( (int) differenceInDays, test.age());
+		test("Friedrich Nietzsche", test.getAuthor());
+		test("der Antichrist",test.getTitle());
 		test(1001, test.getId());
 		test("01.01.1895", test.getDate());
+		test("1001, der Antichrist, Friedrich Nietzsche, 01.01.1895", test + "");
 		
-		test2.setAuthor("Georg Büchner");
-		test2.setId(1003);
-		test2.setTitle("Leonce und Lena");
-		test2.setDate("01.01.1879");
+		test.setAuthor("Georg Büchner");
+		test.setId(1003);
+		test.setTitle("Leonce und Lena");
+		test.setDate("01.01.1879");
 	
 		System.out.println("");
-		System.out.println("Testing second book after using set-methods");
+		System.out.println("Testing first book-object after using set-methods");
 		System.out.println("------------------");
-		test(48135, test2.age());
-		test("Georg Büchner", test2.getAuthor());
-		test("Leonce und Lena", test2.getTitle());
-		test(1003, test2.getId());
-		test("01.01.1879", test2.getDate());
+		
+		differenceInDays 
+		= (  (new Date()).getTime() - (fmt.parse("01.01.1879")).getTime() ) /1000/60/60/24; 
+		
+		test((int) differenceInDays, test.age());
+		test("Georg Büchner", test.getAuthor());
+		test("Leonce und Lena", test.getTitle());
+		test(1003, test.getId());
+		test("01.01.1879", test.getDate());
 		
 		System.out.println("");
 		System.out.println("Testing input()");
 		System.out.println("------------------");
-		test.input();
+		
+		Book test2 = new Book();
 
 		System.out.println("");
 		System.out.println("Print all input");
 		System.out.println("------------------");
-		System.out.println("Alter: " + test.age() + " Tage");
-		System.out.println("Autor: " + test.getAuthor());
-		System.out.println("Titel: " + test.getTitle());
-		System.out.println("ID: " + test.getId());
-		System.out.println(test.getDate());
+		System.out.println("Alter: " + test2.age() + " Tage");
+		System.out.println("Autor: " + test2.getAuthor());
+		System.out.println("Titel: " + test2.getTitle());
+		System.out.println("ID: " + test2.getId());
+		System.out.println(test2.getDate());
 	
 	}
 	

@@ -1,17 +1,15 @@
 public class RemChar {
 
 	public static void main (String args[]) {
-		System.out.println(removeChar("Programmieren", 'r'));
+		System.out.println(removeChar("Pogammieen", 'r'));
 	}
 	
 	public static String removeChar(String s, char chr) {
-		char[] characters = s.toCharArray();
+		String[] characters = s.split(chr+"");
 		String newString = "";
 		
 		for (int i = 0; i < characters.length; i++) {
-			if (characters[i] != chr) {
-				newString = newString + characters[i];
-			}
+			newString = newString + characters[i];
 		}
 		return (newString);
 	}

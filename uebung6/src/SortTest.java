@@ -1,7 +1,10 @@
-/* Programmierung 1 HS 2010 Aufgabe 6-1 */
-
-import java.util.ArrayList;
-import java.util.List;
+/*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 09.12.2010
+* 
+*/
 
 public class SortTest{
 	public static void main (String[] args) {

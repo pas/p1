@@ -1,6 +1,11 @@
 /*
- Programmierung 1 HS 2010
- Musterlösung Aufgabe 2-2
+*
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 17.10.2010
+*
+*
 */
 
 import java.util.Date;
@@ -27,13 +32,16 @@ public class Book{
 	  }
 	}
 
+	public Book () {
+		input();
+	}
 
 	/** Returns the age of the book in days since publication */
 	public int age(){
 		Date today = new Date();
 		long age = today.getTime() - dateOfPublication.getTime();
 		age = age / 1000 / 60 / 60 / 24; 
-		return (int) age; //this is to avoid compiler errors, replace it!
+		return (int) age;
 	}
 
 	/** Returns a String representation of the book */

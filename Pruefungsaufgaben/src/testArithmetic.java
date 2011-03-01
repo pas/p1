@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+//Dürfen immer neue Methoden gemacht werden auch wenn nichts steht?
+
 public class testArithmetic {
 	  public static void main(String args[]) {
 		    Arithmetic test2 = new Arithmetic(2000);
@@ -9,7 +11,7 @@ public class testArithmetic {
 
 class Arithmetic {
 	private int number;
-	private ArrayList factors = new ArrayList();
+	private ArrayList<Integer> factors = new ArrayList<Integer>();
 	
 	public Arithmetic(int i) {
 		number = i;
@@ -31,10 +33,15 @@ class Arithmetic {
 			number = number*-1;
 		}
 			
-		while (number != 1) {
-			int factor = findFactor(number);
-			factors.add(factor);
-			number = number/factor;
+		int candidate = 2;
+		int rest = number;
+		   
+		while (rest > 1) {
+		  	if (rest%candidate == 0) {
+		  		rest = rest/candidate;
+		    	factors.add(candidate);
+		    }
+		  	else { candidate++; }
 		}
 	}
 	
@@ -49,7 +56,7 @@ class Arithmetic {
 	
 	public String toString() {
 		String string = number+": ";
-		for(Object factor: factors) {
+		for(Integer factor: factors) {
 			string = string + "" + factor + " * ";
 		}
 		return(string.substring(0, (string.length()-3)));

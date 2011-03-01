@@ -10,6 +10,10 @@
 
 public class Exceptions { 
 	Exceptions () {
+/**/
+	}
+	
+	public void testMich () {
 		try { 
 			for (int n= 3; n>= -3; n--) {
 				System.out.println(100/n);
@@ -17,14 +21,17 @@ public class Exceptions {
 		}
 		catch (ArithmeticException e) {
 			System.out.println("0-Divide");
+			
 		}
 		finally {
 			System.out.println("Done");
 		}
+		return;
 	}
 	
 	public static void main(String[] args) {
-		new Exceptions();
+		Exceptions test = new Exceptions();
+		test.testMich();
 	}
 
 }

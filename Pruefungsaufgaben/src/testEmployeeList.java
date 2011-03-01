@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
+// Braucht es ein Handling, wenn beispielsweise null übergeben wird anstatt ein String. Oder z.B. neg. Zahl?
+
 public class testEmployeeList {
 	  public static void main(String args[]) {
 		  Employee putzfachassistent = new Employee("Guiseppe Lambda", 2400);
-		  Manager nichtstunabervielverdiener = new Manager("Hans Meier", 1000000, "Flugreiseprechecking");
-		  Employee[] employees = {putzfachassistent, nichtstunabervielverdiener};
-		  EmployeeList liste = new EmployeeList(employees);
+		  Manager nichtstunabervielverdiener = new Manager("Hans Meier", 1000000, "Businessreiseprechecking");
+		  EmployeeList liste = new EmployeeList(putzfachassistent, nichtstunabervielverdiener);
 		  System.out.println(liste);
 	  }	
 }
@@ -13,7 +14,7 @@ public class testEmployeeList {
 class EmployeeList {
 	protected ArrayList<Employee> members = new ArrayList<Employee>();
 
-	public EmployeeList (Employee[] toAdd) {
+	public EmployeeList (Employee ... toAdd) {
 		for (int i=0; i<toAdd.length; i++) {
 			members.add(toAdd[i]);
 		}
@@ -37,6 +38,8 @@ class Employee {
 		this.salary = salary;
 	}
 	
+	// Soll hier das DecimalFormat gebraucht werden?
+	
 	public String toString() {
 		return (name + " owns " + salary + " sFr. per month");
 	}
@@ -51,6 +54,6 @@ class Manager extends Employee {
 	}
 	
 	public String toString() {
-	  return (name + " is manager of " + departement + " and owns " + salary + " sFr. per month");
+	  return (super.toString() + " and works in departement " + departement);
 	}
 }

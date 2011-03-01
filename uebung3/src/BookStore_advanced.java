@@ -1,6 +1,11 @@
 /*
- * Using array to store books
- */
+* 
+* Author: Judith Fuog / Pascal Zaugg
+* Matrikelnr.: 09-926-809 / 05-299-425
+* Last modified: 04.11.2010
+* 
+* Using array to store books
+*/
 
 public class BookStore_advanced {
 	private Book[] Books = new Book[5];
